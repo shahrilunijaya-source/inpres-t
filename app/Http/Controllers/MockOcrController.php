@@ -12,13 +12,30 @@ use Illuminate\Http\Request;
  */
 class MockOcrController extends Controller
 {
+    // Sample ICs advertised on the Apply form ("Cuba IC contoh: …"). The random
+    // CitizenSeeder never generates these exact ICs, so on a freshly deployed
+    // host (no manual db:seed) a DB lookup would miss. Resolve them from this
+    // code constant instead — seed-independent, works on every `git pull` deploy.
+    private const SAMPLE_CITIZENS = [
+        '761112-10-3285' => ['full_name' => 'Ahmad bin Ahmad', 'dob' => '1976-11-12', 'gender' => 'M',
+            'address' => '8, Jalan Pinggiran Putra 2', 'postcode' => '43300', 'state' => 'Selangor'],
+        '920418-10-5566' => ['full_name' => 'Farah Nadia binti Salleh', 'dob' => '1992-04-18', 'gender' => 'F',
+            'address' => '8, Jalan Pinggiran Putra 2, 43300 Seri Kembangan, Selangor', 'postcode' => '43300', 'state' => 'Selangor'],
+    ];
+
     public function lookup(Request $request): JsonResponse
     {
         $request->validate([
             'ic' => 'required|string|regex:/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/',
         ]);
 
-        $citizen = Citizen::where('ic', $request->input('ic'))->first();
+        $ic = $request->input('ic');
+        $citizen = Citizen::where('ic', $ic)->first();
+
+        // Seed-independent fallback for advertised sample ICs (unsaved model).
+        if (! $citizen && isset(self::SAMPLE_CITIZENS[$ic])) {
+            $citizen = new Citizen(array_merge(['ic' => $ic], self::SAMPLE_CITIZENS[$ic]));
+        }
 
         if (! $citizen) {
             return response()->json([
