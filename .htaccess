@@ -1,0 +1,18 @@
+# Laravel-in-public_html guard (Hostinger hPanel Git tool clones repo into doc root).
+# Blocks sensitive files/source dirs, rewrites everything else into public/.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block dotfiles (.env, .git, etc.)
+    RewriteRule "(^|/)\." - [F,L]
+
+    # Block project meta + config files at root
+    RewriteRule "^(composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan|deploy\.sh|.*\.md|tailwind\.config\.js|postcss\.config\.js|vite\.config\.js|webpack\.mix\.js)$" - [F,L]
+
+    # Block Laravel source/runtime dirs
+    RewriteRule "^(app|bootstrap|config|database|resources|routes|storage|tests|vendor|docs|source|node_modules)(/.*)?$" - [F,L]
+
+    # Send everything else into public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
