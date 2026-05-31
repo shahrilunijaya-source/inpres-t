@@ -22,6 +22,19 @@ class DemoCaseSeeder extends Seeder
         $officer = User::where('email', 'demo@jpn.gov.my')->first();
         $base = Carbon::parse('2026-05-28 09:05:00');
 
+        // Sample ICs advertised on the Apply form ("Cuba IC contoh: …") that are
+        // NOT demo anchors. CitizenSeeder generates random ICs, so these would
+        // only exist by chance — seed them deterministically so the OCR pull
+        // works on every fresh DB (local + host). The mother sample
+        // (920418-10-5566) is already seeded below as the birth anchor.
+        $sampleCitizens = [
+            ['ic' => '761112-10-3285', 'full_name' => 'Ahmad bin Ahmad', 'dob' => '1976-11-12', 'gender' => 'M',
+             'address' => '8, Jalan Pinggiran Putra 2', 'postcode' => '43300', 'state' => 'Selangor'],
+        ];
+        foreach ($sampleCitizens as $c) {
+            Citizen::updateOrCreate(['ic' => $c['ic']], $c);
+        }
+
         foreach (config('demo_cases') as $case) {
             // Citizen (OCR source record) — a citizen is one person, so for a
             // marriage couple use the groom's name, not the combined couple label.

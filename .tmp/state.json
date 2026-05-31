@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "XSRF-TOKEN",
+      "value": "eyJpdiI6IkNQZHZsSzVTSW9zWCtYcUVSRm9NQ2c9PSIsInZhbHVlIjoiRVRwdUJyQTNOaEpmY29nTzRJdTQ2K3BTck5PYTVMTHYxRi83WUwzSUxOUmxLaVNIRXRrNk9rbnFZb3FpWnI3NGc3VUk5N2tNZ1pwZTRvUU00UGdSYmJmcThkbHJmWm8zb0hLa2tWUUpYeHhlMEw0SUdsdHJEQ2VKUFVWbTFYQW0iLCJtYWMiOiIyYTk1YmJkMTBjN2IxYjQzZDRhNDQwNWJmMmNmNTczNGU4YWU1ZDljOTAyYmNmZGFjZjdhNDk2YmY5NjRlNGE2IiwidGFnIjoiIn0%3D",
+      "domain": "inpres-t.myappsonline.net",
+      "path": "/",
+      "expires": 1780271584.346109,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "laravel-session",
+      "value": "eyJpdiI6IlpRYTB2RlBMNHJjV0tSa1ZZYWowaFE9PSIsInZhbHVlIjoiMUVKcWpJRlJySzd1azBYaC9td0lDaU4wTk8yM3NLaElQNThqTmVheEc2aTJacmgwYjJXM2pNZDRFWEh0dGM0Z3RIeE1RcTBpRHVLcHI1a1FaUGFodURwRnVNNUZWS1d5a3dveWFFbmNDOHJNTWhMVkVINzdQMWl1VFF0cjRoYlYiLCJtYWMiOiI1MDllY2ViYzE2MDRjODFlZDY5NGJhYTg1NmQzZDY0ZjIxODk1OTViMjg0NjI1YzY0ODI0NTk2NjkzMmMyNDQ0IiwidGFnIjoiIn0%3D",
+      "domain": "inpres-t.myappsonline.net",
+      "path": "/",
+      "expires": 1780271584.346216,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
