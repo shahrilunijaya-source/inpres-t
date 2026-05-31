@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+@import './theme.css';
+@import './signature.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+
+/* Tailwind font utilities track the company fonts defined in theme.css */
+@theme {
+    --font-sans: var(--ai-font);
+    --font-mono: var(--ai-mono);
+}
+
+/* ---------- Reset + body baseline ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background: var(--ai-bg);
+    color: var(--ai-text);
+    font-family: var(--ai-font);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+}
+
+/* Subtle radial backdrop — Stripe-style soft tint */
+body {
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, var(--body-tint-1), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, var(--body-tint-2), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ai-text);
+}
+
+h1 { font-size: 2.75rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+a {
+    color: var(--ai-indigo);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+a:hover {
+    color: var(--teal-700);
+}
+
+/* WCAG AA keyboard focus ring (portal) */
+:focus-visible {
+    outline: 2px solid var(--ai-indigo);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: var(--ai-indigo-soft);
+    color: var(--ai-text);
+}
+
+/* Scrollbar (light) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--ai-bg-2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--ai-border-hi);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}

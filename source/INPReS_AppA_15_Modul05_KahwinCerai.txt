@@ -1,0 +1,167 @@
+MODUL 5 /  MODUL PERKAHWINAN DAN PERCERAIAN SIVIL · STRUKTUR FUNGSI · MUKA 1 DARIPADA LAMPIRAN A PARA 2.2 · MS.63 -
+16
+           3                                                                                                                                                   79
+
+Modul Perkahwinan dan Perceraian Sivil
+
+Modul Perkahwinan dan Perceraian Sivil memproses pendaftaran perkahwinan dan perceraian bagi rakyat bukan Islam menurut Akta Membaharui
+Undang-Undang (Perkahwinan dan Perceraian) 1976 (Akta 164). Sistem menyokong empat lokasi pengupacaraan: JPN sahaja, Rumah Ibadat dan
+Persatuan Agama, Pejabat MALAWAKIL (luar negara), dan Tribunal. Muka 2 menerangkan cerita Encik Ahmad dan Puan Faridah. Muka 3 menerangkan
+integrasi.
+
+STRUKTUR MODUL PERKAHWINAN DAN PERCERAIAN SIVIL · 19 FUNGSI UTAMA
+
+PENDAFTARAN UTAMA · 7 FUNGSI                                   SIJIL + CABUTAN · 7 FUNGSI                                      PENGURUSAN REKOD · KRITIKAL · 5 FUNGSI
+
+Akta 164 Seksyen 22, 24, 26, 46B                               Dokumen rasmi pasangan                                          Blockchain + Family Tree update
+
+Pendaftaran Perkahwinan                 Pengurusan Kaveat        Carian Daftar      Cabutan Daftar Perkahwinan                 Pewujudan Rekod                     Pengesahan Rekod
+       Sivil · bukan Islam                  Tempoh 21 hari     Bayaran semakan                    Salinan sah                  Hyperledger Fabric                    Crypto signature
+
+  Pendaftaran Perceraian                Daftar Semula S.46B      Sijil Perkahwinan                          Sijil Perceraian   Pembatalan Permohonan                         Pelupusan Rekod
+Selepas Perintah Mahkamah               Sebelum Akta 164 1982  JPN.KC02 Borang JPN                    Selepas decree absolute         Sebelum upacara                          Akta Arkib 2003
+
+MALAWAKIL Luar Negara                     Pengesahan Taraf     Paparan Digital                          Cetakan Semula         Pembetulan Maklumat (Fakta + Perkeranian) + Panel Khas
+ Kedutaan / Konsulat MY                 Dalam dan luar negara   QR verification                           Hilang / rosak                 Jawatankuasa Pertimbangan + audit trail penuh
+
+           Tribunal Perkahwinan + Badan Pendamai               Pelantikan Penolong Pendaftar Rumah Ibadat                       SIJIL = ENTRY POINT WARISAN + FAMILY TREE
+                Sesi kaunseling sebelum perceraian                Gereja, Kuil, Persatuan Buddhist, Sikh, Hindu                Pencen suami isteri · KWSP · Tabung Pendidikan
+
+ANALOGI KEFAHAMAN
+
+Modul Perkahwinan adalah seperti pejabat notari awam khusus untuk hubungan suami isteri. Pasangan datang dengan dua saksi. Kaveat ditapis 21 hari
+untuk memastikan tiada bantahan (contohnya pasangan masih berkahwin). Sekali sijil dikeluarkan dan didaftarkan dalam blockchain, status undang-undang berubah
+serta-merta, dan Family Tree dikemas kini. Ini mengikat hak pasangan dalam warisan, pencen, KWSP, Tabung Pendidikan dan banyak lagi.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN
+
+LAMPIRAN A Para 2.2 · Modul Perkahwinan dan Perceraian (ms.63 - 79)PERUNDANGAN                                                 PIAWAIAN TEKNIKAL
+
+· 19 fungsi utama didokumenkan di ms.64 - 76                   · Akta 164 (Perkahwinan dan Perceraian) 1976                    · ISO/IEC 19794 (biometric data interchange)
+                                                                                                                               · PDPA 2010 (perlindungan data pasangan)
+· Integrasi 8 modul + 11 agensi: ms.77                         · Akta 164 S.22, 24, 26 (kategori pendaftaran)                  · Akta Keterangan 1950 S.90A (bukti digital)
+                                                                                                                               · Akta Arkib Negara 2003 (retention rekod)
+· 4 lokasi: JPN, Rumah Ibadat, MALAWAKIL, Tribunal             · Akta 164 S.46B (pendaftaran semula)                           · LAMPIRAN A Para 2.1 (viii) Blockchain
+
+· Tempoh kaveat 21 hari: ms.65                                 · Akta Pencen 1980 (kaskad ke pasangan)
+
+· Pendaftaran semula bawah S.46B: ms.74                        · Akta KWSP 1991 (penama dan ahli warisan)
+
+Strategi INPReS · Modul Perkahwinan Struktur (1/3)                                                                                                                                              33 / 96
+MODUL 5 /  MODUL PERKAHWINAN DAN PERCERAIAN SIVIL · CERITA SATU TRANSAKSI · MUKA 2                                                                       LAMPIRAN A PARA 2.2 · MS.63 -
+16         DARIPADA 3                                                                                                                                    79
+
+Cerita Satu Transaksi · Perkahwinan Ahmad dan Faridah
+
+12 Jun 2026, Encik Ahmad (32) dan Puan Faridah (28) hadir ke Kaunter JPN Putrajaya untuk daftar perkahwinan sivil. Selepas tempoh kaveat 21 hari
+(tiada bantahan), upacara dijalankan oleh Pendaftar Perkahwinan. Timeline 13 langkah dalam 22 minit menunjukkan workflow lengkap dari
+permohonan hingga sijil siap.
+
+    Pasangan  Kaunter JPN                          kahwin-svc                 family-tree-svc             Oracle RAC                          HL Fabric  Kafka Bus  Notifikasi
+
+           Borang JPN.KC01 + dokumen
+
+1   2 MyKad + 2 saksi + bukti status sivil bujang
+
+                                          POST /api/v1/kahwin/caveat
+
+2             JWT pegawai + IC Encik Ahmad + Puan Faridah
+
+                                                                      Semakan status Family Tree
+
+3                                                  Kedua-dua pasangan: bujang · tiada perkahwinan aktif
+
+                                                                      Status: layak berkahwin
+
+4                                                  tiada caveat sebelum ini · tiada larangan
+
+5                                                  Kaveat 21 hari     Akta 164 S.22 · pengiklanan rasmi
+
+              Notis tarikh upacara: 3 Julai 2026
+
+6             Kaveat 21 hari tamat · tiada bantahan
+
+              POST /api/v1/kahwin/solemnize
+
+7             Upacara di hadapan Pendaftar + 2 saksi · ikrar tandatangan
+
+                                                                      INSERT perkahwinan_master
+
+8                                                                     No. Daftar PK-2026-009876 · Akta 164 · TDE encrypted
+
+                                                                      row_id returned · SCN 19678901
+
+9                                                                     replicated to PDSA Data Guard SYNC
+
+                                                                                               SubmitPerkahwinanEvent()
+
+10                                                                    submit audit chaincode · bukti status undang-undang berubah · KRITIKAL
+
+                                                                                                  tx_hash: 0xc5e7a1...
+
+11                                                                            block #1925012 · pasangan rasmi suami isteri · KRITIKAL
+
+                                                                                                  Publish event.kahwin.registered
+
+12                                                                            6 pelanggan melanggan · mykad, family-tree, KWSP, LHDN, KPN, Pencen
+
+              Sijil JPN.KC02 · cetakan kaunter
+
+13            QR code embedded · 2 salinan untuk pasangan · crypto signature
+
+               22 min                                                   21 hari                                       6                                            2
+
+           PURATA MASA UPACARA                                          TEMPOH KAVEAT                                  MODUL DIKEMASKINI                          LANGKAH KRITIKAL
+
+           Selepas tempoh kaveat 21 hari                              Akta 164 S.22 mandatori             MyKad, Family Tree, KWSP, LHDN, KPN, Pencen    Langkah 10, 11 immutable di HL Fabric
+
+Strategi INPReS · Modul Perkahwinan Cerita (2/3)                                                                                                                                                34 / 96
+MODUL 5 /  MODUL PERKAHWINAN DAN PERCERAIAN SIVIL · INTEGRASI DAN JUSTIFIKASI · MUKA 3                                                                                    LAMPIRAN A PARA 2.2 · MS.63
+16         DARIPADA 3                                                                                                                                                     - 79
+
+Modul Perkahwinan · Integrasi dan Perkakasan
+
+Modul Perkahwinan dan Perceraian Sivil berintegrasi dengan 8 modul dalaman, 11 agensi luar (termasuk Mahkamah Tinggi, MALAWAKIL Kementerian
+Luar, dan rumah ibadat berdaftar), dan 6 jenis perkakasan kaunter. Bahagian ini memperincikan semua titik integrasi, justifikasi reka bentuk, dan
+pematuhan tender.
+
+PETA INTEGRASI MODUL PERKAHWINAN DAN PERCERAIAN
+
+8 MODUL DALAMAN INPReS                  Modul Kematian             11 AGENSI LUAR                       MALAWAKIL (Kemlu)        6 PERKAKASAN KAUNTER                          Pembaca Kad IC
+
+Via Apache Kafka event stream                                      Via API Gateway + OAuth 2.0 mTLS                              Spesifikasi APPENDIX C · Waranti 5 tahun
+
+           Modul Kelahiran                                                   Mahkamah Tinggi                                              Pengimbas Cap Jari
+
+Modul Kad Pengenalan                    Modul Kewarganegaraan      KWSP · Penama                        LHDN · Status Cukai      Pencetak Sijil Kaunter                    Pengimbas Dokumen
+
+Modul Kutipan Hasil                     Modul Pengurusan Sijil     JPA · Pencen Pasangan                Imigresen · Spouse Visa  Tablet Tandatangan Digital                Terminal Pembayaran FPX
+
+           Modul Senarai Hitam + Modul Pelaporan                   + Rumah Ibadat berdaftar (Gereja, Kuil, Persatuan)            Kamera Webcam (untuk pasangan + 2 saksi)
+
+JUSTIFIKASI REKA BENTUK MODUL PERKAHWINAN                                                               4. Mengapa MALAWAKIL Luar Negara?
+                                                                                                        Warganegara Malaysia di luar negara boleh berkahwin di kedutaan.
+1. Mengapa Kaveat 21 Hari?                                                                              Kementerian Luar bertindak sebagai pendaftar perkahwinan.
+Akta 164 S.22 mewajibkan tempoh ini untuk pengiklanan dan
+elak perkahwinan haram (poligami tanpa kebenaran, di bawah umur).                                       5. Mengapa Tribunal Sebelum Perceraian?
+                                                                                                        Akta 164 S.106 mewajibkan sesi kaunseling sebelum perceraian.
+2. Mengapa Family Tree Wajib Disemak?                                                                   Tribunal Perkahwinan beri peluang pendamaian.
+Untuk pastikan pasangan tidak ada hubungan darah terlarang
+(adik beradik, ibu bapa angkat) dan tiada perkahwinan aktif.                                            6. Mengapa Pendaftaran Semula S.46B?
+                                                                                                        Pasangan yang berkahwin sebelum Akta 164 (1982) boleh
+3. Mengapa Pendaftar Rumah Ibadat?                                                                      daftar semula untuk dapat sijil rasmi dan hak perundangan.
+Bukan Islam: ramai pasangan ingin upacara di gereja/kuil.
+Penolong Pendaftar dilantik untuk hadiri dan sahkan.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN
+
+LAMPIRAN A Para 2.2 · Modul Perkahwinan dan Perceraian (ms.63 - 79)PERUNDANGAN                                                   PIAWAIAN TEKNIKAL
+
+· 19 fungsi utama didokumenkan di ms.64 - 76                       · Akta 164 (Perkahwinan dan Perceraian) 1976                  · ISO/IEC 19794 (biometric data interchange)
+                                                                                                                                 · PDPA 2010 (perlindungan data pasangan)
+· Integrasi 8 modul + 11 agensi: ms.77                             · Akta Pencen 1980 · Akta KWSP 1991                           · Akta Keterangan 1950 S.90A (bukti digital)
+
+· 6 perkakasan kaunter: ms.78                                      · Akta Kementerian Luar (MALAWAKIL)
+
+Strategi INPReS · Modul Perkahwinan Integrasi (3/3)                                                                                                                                                 35 / 96
+

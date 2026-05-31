@@ -1,0 +1,155 @@
+MODUL 1 / 16 MODUL KELAHIRAN · STRUKTUR FUNGSI · MUKA 1 DARIPADA 3                                                                                    LAMPIRAN A PARA 2.2 · MS.17 - 29
+
+Modul Kelahiran
+
+Modul Kelahiran memproses dan mendaftarkan setiap kelahiran di Malaysia menurut Akta Pendaftaran Kelahiran dan Kematian 1957 (Akta 299) bagi
+Semenanjung, Ordinan Sabah CAP 123, dan Ordinan Sarawak CAP 10. Modul ini merupakan entry point utama sistem INPReS bagi rekod sivil rakyat. Muka
+2 menerangkan cerita satu transaksi. Muka 3 menerangkan integrasi dan justifikasi reka bentuk.
+
+STRUKTUR MODUL KELAHIRAN · 22 FUNGSI UTAMA
+
+KATEGORI PENDAFTARAN · 7 FUNGSI                             SIJIL + MyKid · 8 FUNGSI                                   PENGURUSAN REKOD · KRITIKAL · 7 FUNGSI
+
+Berdasarkan Akta 299 Seksyen 7, 11, 12                      Dokumen identiti pertama warganegara                       Blockchain immutable · Akta Keterangan 1950 S.90A
+
+Pra Pendaftaran Hospital          Pendaftaran Biasa         Cabutan Daftar Kelahiran  Carian Daftar Kelahiran                                         Pewujudan Rekod     Pengesahan Rekod
+         Integrasi KKM       60 hari (SM) / 14 hari (SSL)              Salinan sah        Bayaran semakan                                             Hyperledger Fabric    Crypto signature
+
+  Pendaftaran Lambat             Pendaftaran Lewat          Cetakan Semula Sijil      Paparan Sijil Digital            Pembatalan Rekod                                   Pelupusan Rekod
+Hari 15 - 42 (SSL sahaja)    >60 hari SM / >42 hari SSL     JPN.LM05 / Borang XII         QR verification                Audit trail penuh                                 Akta Arkib 2003
+
+Kelahiran Mati (Stillbirth)   Kelahiran di Hedjaz              MyKid Kali Pertama                 Gantian MyKid        Pengesahan Digital · Carian Sejarah · Log Transaksi Immutable
+   Minggu ke-28 keatas       Akta 152 Seksyen 4(1)          Selepas daftar kelahiran              Rosak / hilang            Hyperledger Fabric 4 peer + 3 orderer · Retention 7 tahun
+
+   Atas Kapal · Semula · Pembetulan                         Pertanyaan Cip MyKid · Pembatalan · Pelupusan                   SEMUA REKOD KELAHIRAN = BUKTI DOKUMENTARI
+Akta 299 S.27(3) · Jawatankuasa Panel                                   Salasilah Keluarga (Family Tree)               Diterima mahkamah tanpa perlu percaya pentadbir JPN
+
+ANALOGI KEFAHAMAN
+
+Modul Kelahiran adalah seperti pejabat catatan sivil lama, tetapi dengan tiga peti besi digital: peti pendaftaran (siapa, bila, di mana),
+peti pengeluaran (sijil dan kad MyKid), dan peti simpanan kekal (blockchain). Sekali sesuatu masuk peti ketiga, tiada sesiapa boleh ubah atau padam,
+termasuk pentadbir JPN sendiri. Ini menjamin identiti Adam, anak Puan Siti Aisyah, kekal selamanya sebagai bukti yang diterima mahkamah.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN                    PERUNDANGAN                                                PIAWAIAN TEKNIKAL
+
+LAMPIRAN A Para 2.2 · Modul Kelahiran (ms.17 - 29)          · Akta Pendaftaran Kelahiran dan Kematian 1957 (Akta 299)  · ISO/IEC 19794 (biometric data interchange)
+· 22 fungsi utama didokumenkan di ms.19 - 27                · Ordinan Sabah CAP 123 · Ordinan Sarawak CAP 10           · ISO/IEC 30107 PAD (anti-spoofing)
+· Integrasi 9 modul dalaman + 13 agensi: ms.27 - 28         · Akta 152 Seksyen 4(1) untuk Hedjaz (haji)                · Akta Keterangan 1950 Seksyen 90A (bukti digital)
+· 9 perkakasan biometrik dan kaunter: ms.28                 · Akta 299 Seksyen 27(3) bagi pembetulan maklumat          · Akta Arkib Negara 2003 (retention rekod)
+· Dokumen JPN.LM05 (SM) · Borang XII (Sarawak): ms.28 - 29  · PDPA 2010 S.6, 9, 30 (perlindungan data peribadi)        · LAMPIRAN A Para 2.1 (viii) Blockchain
+· Tempoh daftar 60 hari SM, 14 hari SSL: ms.19
+
+Strategi INPReS · Modul Kelahiran Struktur (1/3)                                                                                                                                              21 / 96
+MODUL 1 / 16 MODUL KELAHIRAN · CERITA SATU TRANSAKSI · MUKA 2 DARIPADA 3                                                                                          LAMPIRAN A PARA 2.2 · MS.17 - 29
+
+Cerita Satu Transaksi · Kelahiran Bayi Adam
+
+15 Mac 2026, Puan Siti Aisyah lahirkan Adam di Hospital KL. Timeline di bawah menunjukkan 14 mesej mengalir antara 9 komponen dalam 12 minit.
+Langkah kritikal ditanda oren.
+
+    Hospital KKM  Kaunter JPN                                kelahiran-svc  biometric-svc                             Oracle RAC            HL Fabric             Kafka Bus  Notifikasi
+
+                  Pra-daftar digital bayi Adam
+
+1                 data klinikal · berat 3.2kg · via API KKM
+
+                  POST /api/v1/kelahiran/register
+
+2                                         JWT + IC Puan Siti Aisyah
+
+3                                                            JWT valid      Kong + Keycloak · scope=kelahiran.create
+
+                                                                     Capture biometrik ibu bapa
+
+4                                                            10 cap jari + face match Puan Siti Aisyah
+
+5                                                                                             ABIS 1:N 30M+ rekod · GPU NVIDIA H200 · < 5 saat · KRITIKAL
+
+                                                                     Biometric OK · tiada duplikat
+
+6                                                                       Puan Siti Aisyah sah
+
+                                                                            INSERT kelahiran_master
+
+7                                                                    Adam bin Hisham · No. Daftar KLH-2026-001234 · TDE encrypted
+
+                                                                            row_id returned · SCN 18764592
+
+8                                                                           replicated to PDSA Data Guard SYNC
+
+                                                                                                    SubmitKelahiranEvent()
+
+9                                                                           submit audit chaincode · bukti immutable bermula · KRITIKAL
+
+                                                                                                    tx_hash: 0x7a3b9c...
+
+10                                                                          block #1847662 · kekal selamanya · bukti mahkamah · KRITIKAL
+
+                                                                                                        Publish event.kelahiran.registered
+
+11                                                                          7 pelanggan melanggan · mykid, warganegara, kutipan, LHDN, pendidikan
+
+                                                                                                                            SMS + email Puan Siti Aisyah
+
+12                                                                                                      Notis kutipan MyKid (7-14 hari) · siti.aisyah@gmail.com
+
+                                          Sijil JPN.LM05 + receipt
+
+13                QR code embedded · crypto signature
+
+         12 min                                                         < 15 min                                            9                                                  3
+
+      PURATA MASA TRANSAKSI                                                         SLA P95                                  KOMPONEN TERLIBAT                                    LANGKAH KRITIKAL
+
+    Dari pra-daftar hingga serahan sijil                             Denda jika gagal (LAMPIRAN C)              Hospital, Kaunter, 2 svc, Oracle, HL, Kafka, SMS  Langkah 5, 9, 10 direkod immutable di HL Fabric
+
+Strategi INPReS · Modul Kelahiran Cerita (2/3)                                                                                                                                                                     22 / 96
+MODUL 1 / 16 MODUL KELAHIRAN · INTEGRASI DAN JUSTIFIKASI · MUKA 3 DARIPADA 3                                                                                               LAMPIRAN A PARA 2.2 · MS.17 - 29
+
+Modul Kelahiran · Integrasi dan Perkakasan
+
+Modul Kelahiran berintegrasi dengan 9 modul dalaman, 13 agensi luar, dan 9 jenis perkakasan biometrik sebagaimana diwajibkan dalam LAMPIRAN A
+Para 2.2. Bahagian ini memperincikan semua titik integrasi, justifikasi teknikal, dan pematuhan kepada keperluan tender.
+
+PETA INTEGRASI MODUL KELAHIRAN
+
+9 MODUL DALAMAN INPReS                                                                      13 AGENSI LUAR                                                                 9 PERKAKASAN KAUNTER
+
+Via Apache Kafka event stream                                                               Via API Gateway + OAuth 2.0 + mTLS                                             Spesifikasi APPENDIX C · Waranti 5 tahun
+
+Modul Kematian                 Modul Anak Angkat                                            KKM · Kelahiran hospital            Tabung Haji · Hedjaz                       Biometrik 10 Cap Jari                     Kamera Muka + Iris
+
+Modul Kad Pengenalan  Perkahwinan & Perceraian                                              JIM · Nombor paspot                 JAKIM · Perkahwinan Islam                  Pengimbas Cap Jari     PC Kaunter Dual Monitor
+
+Modul Senarai Hitam            Modul Warganegara                                            MAIS Sarawak · Bukan Islam          JKSM · Perceraian Islam                    Pencetak Kaunter                          Pembaca Kad IC
+
+Modul Siasatan                 Modul Kutipan Hasil                                          Mahkamah Tinggi                     JAKOA · Orang Asli                         Pembaca QR Code                           QR Code Generator
+
+Modul Pengurusan Sijil & Dokumen (Pusat Pengurusan Rekod PPR)                               JKM · Laporan Sosial                Pendidikan · Persekolahan                  Pengimbas Dokumen + Terminal Pembayaran (FPX / iGFMAS)
+
+Event publish: BirthRegistered.v2 · Pelanggan: semua 9 modul dengar event relevan + 3 agensi lain: Kedutaan · iGFMAS · Sistem Percetakan MyKid                             Biometrik JPN · ISO/IEC 19794 · Anti-spoofing 30107
+
+JUSTIFIKASI REKA BENTUK MODUL KELAHIRAN                                                                                         4. Mengapa Pra-Pendaftaran di Hospital?
+                                                                                                                                Kelahiran berlaku di hospital, bukan kaunter JPN. Pra-pendaftaran digital kurangkan masa kaunter
+1. Mengapa Blockchain untuk Sijil Kelahiran?                                                                                    dari 30 minit ke 10 minit. Rakyat datang hanya untuk biometrik dan ambil sijil.
+Sijil kelahiran dokumen identiti pertama. Sekali dipalsukan, kesan seumur hidup.
+Hyperledger Fabric: (a) immutable, (b) cryptographic proof, (c) telus kepada auditor bebas.                                     5. Mengapa QR Code pada Sijil?
+                                                                                                                                QR code pada sijil JPN.LM05 membolehkan pengesahan segera. Guru semak sijil murid, hospital
+2. Mengapa Event-Driven kepada 9 Modul?                                                                                         semak sijil ibu, majikan semak pekerja. Mengurangkan penipuan dokumen.
+Kelahiran cetuskan tindakan di modul lain. Modul Kad sedia MyKid, Modul Kutipan rekod bayaran.
+Kafka event-driven memastikan semua modul update serentak tanpa coupling ketat.                                                 6. Mengapa Akta 299 + Ordinan SSL Berasingan?
+                                                                                                                                Semenanjung guna Akta 299 (60 hari). Sabah, Sarawak, Labuan guna ordinan asing (14 hari).
+3. Mengapa Integrasi KKM Paling Kritikal?                                                                                       Sistem sokong kedua-dua tanpa gabung supaya Jabatan Audit Negara boleh jejak pematuhan wilayah.
+99% kelahiran di hospital KKM. Integrasi membolehkan pertukaran data klinikal automatik (berat, jantina, hospital)
+mengurangkan ralat dan menjimatkan masa ibu bapa di kaunter JPN.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN                                                    PERUNDANGAN                                                                    PIAWAIAN TEKNIKAL
+                                                                                            · Akta Pendaftaran Kelahiran dan Kematian 1957 (Akta 299)                      · ISO/IEC 19794 (biometric data interchange)
+LAMPIRAN A Para 2.2 · Modul Kelahiran (ms.17 - 29)                                          · Ordinan Sabah CAP 123 · Ordinan Sarawak CAP 10                               · ISO/IEC 30107 (biometric anti-spoofing)
+· 22 fungsi utama didokumenkan di ms.19 - 27
+· Integrasi 9 modul dalaman + 13 agensi: ms.27 - 28                                         ·· AAkkttaa 215929SSeekkssyyeenn42(71)(3u)nbtuakgHi peedmjabz etulan maklumat  ·· AAkkttaa KAerktiebraNneggaanra19250003Se(kresyteennti9o0nAre(bkoudkt)i digital)
+
+·· D9opkeurmkaekna:sJaPnNb.LMio0m5e(tSriMk )+·kBaournatnegr:XmII s(.S2a8rawak): ms.28 - 29
+
+Strategi INPReS · Modul Kelahiran Integrasi (3/3)                                                                                                                                                                                                              23 / 96
+

@@ -1,0 +1,150 @@
+MODUL 4 / 16 MODUL KAD PENGENALAN MYKAD · STRUKTUR FUNGSI · MUKA 1 DARIPADA 3                                                                                 LAMPIRAN A PARA 2.2 · MS.52 - 62
+
+Modul Kad Pengenalan MyKad
+
+Modul Kad Pengenalan adalah dokumen wajib menurut Akta Pendaftaran Negara 1959 (Akta 78) Seksyen 5. Sistem menyokong 5 jenis kad: MyKad
+(warganegara dewasa), MyKid (kanak-kanak), MyPR (penduduk tetap), MyKAS (warganegara sementara), dan MyPOCA (orang asli). Modul ini
+berintegrasi penuh dengan ABIS biometrik (1:N matching) dan MyDigital ID. Muka 2 menerangkan cerita Encik Arjun. Muka 3 menerangkan integrasi.
+
+STRUKTUR MODUL KAD PENGENALAN · 22 FUNGSI UTAMA
+
+PERMOHONAN KALI PERTAMA · 8 FUNGSI                        OPERASI KAD · 9 FUNGSI                                    VV + ABIS · KRITIKAL · 5 FUNGSI
+
+5 jenis kad mengikut Akta 78 Seksyen 5                    Penukaran · gantian · pelupusan                           Verifikasi biometrik · ABIS 1:N matching
+
+        MyKad (12 Tahun)              MyPR                           Penukaran Kad         Gantian Kad              Verifikasi + Validasi                        ABIS 1:N Matching
+Warganegara · biometrik wajib  Penduduk Tetap                 Tukar status · tukar nama    Hilang · rosak              VV permohonan                          30M+ rekod · GPU H200
+
+             MyKAS             MyPOCA                          Pengeluaran Kad                Serahan Kad           Pewujudan Rekod                           Pengesahan Rekod
+Warganegara Sementara          Orang Asli                 Personalization + cetakan        Verifikasi biometrik     Hyperledger Fabric                          Crypto signature
+
+      Daftar Lewat             Orang Baru Tiba            Cetakan Resit                    Pembatalan Permohonan    Pembetulan Maklumat · Pengurusan Panel
+> 12 tahun · soal siasat       Baru naturalisasi          Untuk pemohon                         Sebelum kad keluar      Jawatankuasa Panel + audit trail penuh
+
+  Kaunter Bergerak                Kad Khas                 Pelupusan Kad                   Pemulangan ke JPN        MyKad = ENTRY POINT KE SEMUA PERKHIDMATAN
+Offline mode · pelosok         VVIP · diplomat            Selepas kematian                 Bila diminta semula            MyDigital ID + 74 agensi + paparan digital
+
+ANALOGI KEFAHAMAN
+
+MyKad adalah seperti kunci master bagi seluruh hayat warganegara Malaysia. Setiap perkhidmatan kerajaan, akaun bank, sekolah, hospital, dan
+cabaran bunyi memerlukan MyKad. Apabila kad ini dipalsukan, kunci master itu dicuri. Itulah sebabnya ABIS 1:N matching dengan 30 juta rekod diperlukan untuk
+setiap permohonan. GPU NVIDIA H200 boleh banding cap jari pemohon dengan semua 30 juta rekod dalam 5 saat. Tiada pendua identiti boleh berlaku.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN                  PERUNDANGAN                                               PIAWAIAN TEKNIKAL
+
+LAMPIRAN A Para 2.2 · Modul Kad Pengenalan (ms.52 - 62)   · Akta Pendaftaran Negara 1959 (Akta 78) S.5              · ISO/IEC 19794 (biometric data interchange)
+· 22 fungsi utama didokumenkan di ms.53 - 60              · Peraturan Pendaftaran Negara 1990                       · ISO/IEC 30107 PAD (anti-spoofing)
+· Integrasi 9 modul dalaman + 13 agensi: ms.61            · Akta Imigresen 1959/63 untuk Orang Baru Tiba            · ICAO Doc 9303 (kad polikarbonat)
+· ABIS 1:N matching wajib semua permohonan: ms.55         · Akta Orang Asli 1954 untuk MyPOCA                       · FIPS 201 PIV (kerajaan)
+· 5 jenis kad (MyKad, MyKid, MyPR, MyKAS, MyPOCA): ms.52  · PDPA 2010 S.6, 9, 30 (perlindungan data biometrik)      · LAMPIRAN A Para 2.1 (viii) Blockchain
+· CLMS (Card Life-cycle Management): ms.62
+
+Strategi INPReS · Modul MyKad Struktur (1/3)                                                                                                                                         30 / 96
+MODUL 4 / 16 MODUL KAD PENGENALAN MYKAD · CERITA SATU TRANSAKSI · MUKA 2 DARIPADA 3                                                                                   LAMPIRAN A PARA 2.2 · MS.52 - 62
+
+Cerita Satu Transaksi · Permohonan MyKad Encik Arjun
+
+8 Mei 2026, Encik Arjun (43 tahun) mendapati MyKad beliau telah rosak (cip tidak boleh dibaca). Beliau ke Kaunter JPN Putrajaya untuk memohon
+gantian. Timeline 14 langkah dalam 18 minit, termasuk ABIS 1:N matching dengan 30 juta rekod (kritikal langkah 5).
+
+    Kaunter JPN  mykad-svc                                       biometric-svc  ABIS Engine                           Oracle RAC                      HL Fabric       CLMS  Pencetak Kad
+
+                  Encik Arjun isi borang JPN.KP02
+1jenis: gantian rosak · bukti: kad lama + resit pemb tarif RM10
+
+                 POST /api/v1/mykad/replace
+
+2                JWT pegawai + IC Encik Arjun + kategori penggantian
+
+                 Capture biometrik baru
+
+3                10 cap jari + face capture + iris (ISO 19794-2)
+
+                                                                 SubmitMatchRequest 1:N
+
+4                                                                Banding cap jari + face dengan 30 juta rekod
+
+5                                                                                             ABIS 1:N 30M rekod · GPU NVIDIA H200 · < 5 saat · KRITIKAL
+
+                                                                 Match: Encik Arjun (MyKad sedia ada)
+
+6                                                                match score 99.9% · tiada pendua identiti
+
+                                                                                UPDATE mykad_master · biometrik baru
+
+7                                                                cip baru · nombor siri MK-2026-987654 · TDE encrypted
+
+                                                                                row_id returned · SCN 19567890
+
+8                                                                               replicated to PDSA Data Guard SYNC
+
+                                                                                SubmitKadEvent() · kad lama dibatal
+
+9                                                                               submit audit chaincode · tx_hash kad rosak · KRITIKAL
+
+                                                                                              tx_hash: 0xb8d4e2...
+
+10                                                                              block #1924567 · nombor siri lama tidak boleh diguna lagi · KRITIKAL
+
+                                                                                                               Lifecycle CLMS: card-issuance
+
+11                                                                                            Personalisation data · siapkan untuk pencetakan
+
+12                                                                                                                                                                                 Cetak kad polikarbonat
+                                                                                                                                                                             ICAO Doc 9303 · cip cryptographic
+                                                                                              Kad siap diserah · cip diaktif
+                                                                                                                                                                                   3
+13                                                                              verifikasi cap jari pemohon · kad keluar dari pencetak ke kaunter
+                                                                                                                                                                                       LANGKAH KRITIKAL
+           18 min                                                  < 5 saat                                                    9                                      Langkah 5 (ABIS 1:N), 9, 10 immutable di HL Fabric
+
+         PURATA MASA TRANSAKSI                                      ABIS 1:N MATCHING                                                MODUL DIKEMASKINI
+
+    Borang hingga kad keluar dari pencetak                       30M rekod · GPU NVIDIA H200                   CLMS, MyDigital ID, semua agensi yang melanggan event
+
+Strategi INPReS · Modul MyKad Cerita (2/3)                                                                                                                                                                                31 / 96
+MODUL 4 /  MODUL KAD PENGENALAN MYKAD · INTEGRASI DAN JUSTIFIKASI · MUKA 3 DARIPADA                                      LAMPIRAN A PARA 2.2 · MS.52 -
+16         3                                                                                                             62
+
+Modul MyKad · Integrasi dan Perkakasan
+
+Modul Kad Pengenalan MyKad berintegrasi dengan 9 modul dalaman, 13 agensi luar (termasuk MyDigital ID dan 74 agensi via MyGDX), dan 9 jenis
+perkakasan biometrik dan kaunter. Bahagian ini memperincikan semua titik integrasi, justifikasi reka bentuk, dan pematuhan kepada keperluan tender.
+
+PETA INTEGRASI MODUL KAD PENGENALAN
+
+9 MODUL DALAMAN INPReS         Modul Kematian                          13 AGENSI LUAR               SPR · Pengundi       9 PERKAKASAN BIOMETRIK                           Kamera Muka + Iris
+
+Via Apache Kafka event stream                                          Via MyGDX + OAuth 2.0 mTLS                        Spesifikasi APPENDIX C · Waranti 5 tahun
+
+           Modul Kelahiran                                                    MyDigital ID (MAMPU)                              Pengimbas 10 Cap Jari
+
+Modul Anak Angkat              Modul Kewarganegaraan                   Imigresen · Pasport          PDRM · Saman         Pencetak Kad MyKad                               PC Kaunter Dual Monitor
+
+           Modul ABIS          Modul Senarai Hitam                     JIM · Orang Asing            JAKOA · Orang Asli   Pembaca Cip Kad IC                               Pengimbas Dokumen
+
+           Modul Kutipan + Modul Sijil + Modul Pelaporan               + KKM · KPM · LHDN · KWSP · PERKESO · BNM · Bank  + Tablet Kaunter Bergerak · Pembaca QR · Terminal FPX
+
+JUSTIFIKASI REKA BENTUK MODUL KAD PENGENALAN                                                        4. Mengapa Polikarbonat (Bukan PVC)?
+                                                                                                    Polikarbonat tahan 10+ tahun, kalis pemalsuan dengan ICAO Doc 9303.
+1. Mengapa ABIS 1:N untuk Setiap Permohonan?                                                        PVC mudah pecah, tidak boleh laser engrave.
+MyKad adalah identiti utama. Tanpa 1:N matching,
+pendua identiti boleh berlaku (penjenayah dapat 2 MyKad).                                           5. Mengapa MyDigital ID Integration?
+                                                                                                    Setiap MyKad baru auto-create akaun MyDigital ID. Rakyat boleh terus
+2. Mengapa GPU NVIDIA H200 (Bukan CPU)?                                                             guna untuk perkhidmatan kerajaan online tanpa setup berasingan.
+CPU ambil ~5 minit untuk banding 30M rekod.
+GPU H200 dengan tensor cores ambil < 5 saat. SLA boleh dipenuhi.                                    6. Mengapa Kaunter Bergerak Offline?
+                                                                                                    Untuk kawasan pelosok (Orang Asli, kampung tanpa internet).
+3. Mengapa CLMS Berasingan?                                                                         Tablet boleh capture biometrik, sync semula bila ada rangkaian.
+Card Lifecycle Management System uruskan stok kad kosong,
+personalisation, key injection, dan retirement. Spesialis tersendiri.
+
+RUJUKAN SPESIFIKASI TENDER DAN PEMATUHAN                               PERUNDANGAN                                       PIAWAIAN TEKNIKAL
+
+LAMPIRAN A Para 2.2 · Modul Kad Pengenalan (ms.52 - 62)                · Akta Pendaftaran Negara 1959 (Akta 78) S.5      · ISO 19794 + ISO 30107 PAD (biometric)
+· 22 fungsi utama didokumenkan di ms.53 - 60                           · PDPA 2010 (perlindungan data biometrik)         · ICAO Doc 9303 (kad polikarbonat)
+· Integrasi 9 modul dalaman + 13 agensi: ms.61                         · Akta Imigresen 1959/63 · Akta Orang Asli 1954   · FIPS 201 PIV · Akta Keterangan 1950 S.90A
+· 9 perkakasan biometrik dan kaunter: ms.62
+
+Strategi INPReS · Modul MyKad Integrasi (3/3)                                                                                                                                                      32 / 96
+

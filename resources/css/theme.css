@@ -1,0 +1,321 @@
+/* ============================================================
+   theme.css — InPreS design tokens  (SINGLE PER-COMPANY SWAP SURFACE)
+   ------------------------------------------------------------
+   This is the ONE file a company clone edits to re-skin the whole
+   product (public Portal + officer System). Layout/structure lives
+   in app.css / portal.css / system.css and stays identical across
+   inpres-a / -x / -t — only the values in the COMPANY BRAND block
+   below (colors + fonts) change per company.
+
+   Imported first by app.css, portal.css and system.css. Defines all
+   three legacy token vocabularies so existing var(--*) references
+   keep working unchanged:
+     --teal/--pine/--orange + scales   (portal skin + system)
+     --ai-*                            (portal "AI surface" — light)
+     --font/--mono, --font-sans/-mono  (type)
+   The officer console is a DARK surface: system.css re-declares the
+   handful of dark --ai-* values after importing this file, so they
+   win on officer pages while the brand palette below still drives
+   both surfaces.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ╔════════════════════════════════════════════════════════╗
+     ║  COMPANY BRAND — EDIT THIS BLOCK PER COMPANY           ║
+     ║  (colors + fonts). Everything below derives from here.  ║
+     ╚════════════════════════════════════════════════════════╝ */
+
+  /* ---- PRIMARY brand (legacy name --teal) = GREEN (CTAs, buttons, hero accent) ---- */
+  --teal:        #0FA975;          /* primary brand colour, CTAs, accents — green */
+  --teal-600:    #0C8F63;          /* hover */
+  --teal-700:    #0A7552;          /* press / link hover */
+  --teal-deep:   #0C8F63;          /* system alias of -600 */
+  --teal-50:     #E6F6F0;          /* green tint background */
+  --teal-100:    #C5EBDC;
+  --teal-soft:   rgba(var(--brand-rgb), 0.12);
+
+  /* ---- SECONDARY brand (legacy name --pine) = BLUE (dark surfaces, headings, footer) ---- */
+  --pine:        #1B3A6B;          /* blue — headings + dark surfaces */
+  --pine-700:    #152E54;
+  --pine-900:    #0F2240;          /* darkest blue (dark-mode background) */
+  --pine-deep:   #152E54;
+  --pine-shade:  #0F2240;
+
+  /* ---- Spotlight brand (legacy name --orange) = MAGENTA (limited: dot, verified) ---- */
+  --orange:      #84286B;          /* magenta — limited accents, dot, "wow" spots */
+  --orange-600:  #6E2059;
+  --orange-50:   #F6EAF1;
+  --orange-soft: rgba(var(--orange-rgb), 0.12);
+
+  /* ---- Ink: dark text/ink on light wizard + officer cards ---- */
+  --ink-navy:    #0F2240;          /* darkest blue ink */
+
+  /* RGB triplets — MUST match the hexes above (used in rgba() glows/tints) */
+  --brand-rgb:    15, 169, 117;  /* match --teal (green)    */
+  --pine-rgb:     27, 58, 107;   /* match --pine (blue)     */
+  --orange-rgb:   132, 40, 107;  /* match --orange (magenta)*/
+  --ink-navy-rgb: 15, 34, 64;    /* match --ink-navy       */
+
+  /* ---- Fonts — Theta: heading Roboto Mono, body Inter ---- */
+  --ai-font:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;   /* portal shell / body */
+  --ai-mono:   'Roboto Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;                       /* body */
+  --font-mono: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, monospace;                         /* headings (Theta) */
+  --font:      var(--font-sans);   /* system alias */
+  --mono:      var(--font-mono);   /* system alias */
+
+  /* ╔════════════════════════════════════════════════════════╗
+     ║  END COMPANY BRAND — values below are shared/derived    ║
+     ╚════════════════════════════════════════════════════════╝ */
+
+  /* ---------- Neutrals (Theta cool-grey ramp) ---------- */
+  --ink:            #0F2240;        /* darkest blue ink */
+  --ink-2:          #1B3A6B;        /* blue */
+  --paper:          #FFFFFF;        /* background */
+  --paper-2:        #F2F5F9;        /* muted */
+  --paper-elevated: #FFFFFF;
+
+  --gray-50:  #F2F5F9;             /* muted */
+  --gray-100: #EAEEF5;             /* secondary */
+  --gray-200: #D5DEEA;             /* border / input */
+  --gray-300: #C2CEDE;
+  --gray-400: #8A99B0;
+  --gray-500: #5C6B82;             /* muted-foreground */
+  --gray-600: #46566E;
+  --gray-700: #34465F;
+  --gray-800: #1B3A6B;             /* blue */
+
+  /* system-vocabulary neutrals */
+  --line:   #D5DEEA;              /* Theta border */
+  --line-2: #C2CEDE;
+  --mute:   #5C6B82;              /* Theta muted-foreground */
+  --mute-2: #8A99B0;
+
+  /* ---------- Status ---------- */
+  --success:        #0FA975;        /* Theta green */
+  --warning:        #F59E0B;
+  --danger:         #C0392B;        /* Theta destructive */
+  --status-success: var(--teal);
+  --status-warning: #F4B400;
+  --status-danger:  #C0392B;        /* Theta destructive */
+  --status-info:    #4E7AB5;        /* Theta chart-4 blue */
+
+  /* ---------- Chart ramp (maroon primary, blue secondary, green accent) ---------- */
+  --chart-1: #0FA975;   /* green */
+  --chart-2: #1B3A6B;   /* blue */
+  --chart-3: #84286B;   /* magenta */
+  --chart-4: #4E7AB5;   /* light blue */
+  --chart-5: #B5D0A8;   /* sage */
+
+  /* ---------- Portal "AI surface" — LIGHT (system.css overrides for dark) ---------- */
+  --ai-bg:          #FFFFFF;        /* Theta background */
+  --ai-bg-2:        #F2F5F9;        /* Theta muted */
+  --ai-glass:       #FFFFFF;
+  --ai-glass-hi:    #FFFFFF;
+  --ai-border:      #D5DEEA;        /* Theta border */
+  --ai-border-hi:   #C2CEDE;
+  --ai-text:        var(--pine);    /* Theta foreground navy */
+  --ai-text-dim:    #5C6B82;        /* Theta muted-foreground */
+  --ai-text-mute:   #5C6B82;
+  --ai-indigo:      var(--teal);    /* maroon (primary) */
+  --ai-indigo-soft: var(--teal-50);
+  --ai-violet:      var(--pine);    /* blue (secondary) */
+  --ai-cyan:        var(--pine);    /* blue */
+  --ai-emerald:     var(--teal);    /* green (primary) */
+  --ai-amber:       var(--orange);  /* magenta (limited) */
+  --ai-rose:        #C0392B;        /* destructive red */
+  --ai-accent:      var(--ai-indigo);
+
+  /* ---------- Semantic foregrounds (on paper) ---------- */
+  --fg-1:       var(--pine);
+  --fg-2:       var(--ink);
+  --fg-3:       var(--gray-500);
+  --fg-4:       var(--gray-400);
+  --fg-inverse: var(--paper);
+
+  /* ---------- Semantic backgrounds ---------- */
+  --bg-page:    var(--paper);
+  --bg-card:    var(--paper-elevated);
+  --bg-sunk:    var(--gray-50);
+  --bg-dark:    var(--pine);
+  --bg-deepest: var(--pine-900);
+
+  /* ---------- Borders ---------- */
+  --border-hairline: 0.5px solid rgba(10, 14, 19, 0.08);
+  --border-thin:     1px solid var(--gray-200);
+  --border-strong:   1px solid var(--gray-300);
+  --border-teal:     1px solid var(--teal);
+
+  /* ---------- Radii ---------- */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+  /* system-vocabulary radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 18px;
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---------- Shadows (pine-based, functional) ---------- */
+  --shadow-xs:    0 1px 1px rgba(var(--pine-rgb), 0.03);
+  --shadow-sm:    0 1px 2px rgba(var(--pine-rgb), 0.04);
+  --shadow-md:    0 2px 6px rgba(var(--pine-rgb), 0.05), 0 1px 2px rgba(var(--pine-rgb), 0.03);
+  --shadow-lg:    0 6px 16px rgba(var(--pine-rgb), 0.06), 0 1px 3px rgba(var(--pine-rgb), 0.03);
+  --shadow-focus: 0 0 0 4px rgba(var(--brand-rgb), 0.25);
+  --shadow-glow:        0 4px 14px rgba(var(--brand-rgb), 0.30);
+  --shadow-glow-strong: 0 8px 20px rgba(var(--brand-rgb), 0.45);
+  /* system-vocabulary shadows */
+  --sh-1: 0 1px 2px rgba(10, 14, 19, 0.04);
+  --sh-2: 0 4px 14px rgba(10, 14, 19, 0.06), 0 1px 2px rgba(10, 14, 19, 0.04);
+  --sh-3: 0 18px 48px -16px rgba(0, 38, 36, 0.25), 0 4px 14px rgba(10, 14, 19, 0.06);
+
+  /* ---------- Glow — signature button effect ---------- */
+  --glow-teal:    0 0 0 1px rgba(var(--brand-rgb), 0.20),
+                  0 6px 20px -4px rgba(var(--brand-rgb), 0.45),
+                  0 2px 6px rgba(var(--pine-rgb), 0.10);
+  --glow-teal-hover: 0 0 0 1px rgba(var(--brand-rgb), 0.25),
+                     0 10px 28px -4px rgba(var(--brand-rgb), 0.55),
+                     0 4px 10px rgba(var(--pine-rgb), 0.12);
+  --glow-orange:  0 0 0 1px rgba(var(--orange-rgb), 0.20),
+                  0 6px 20px -4px rgba(var(--orange-rgb), 0.45),
+                  0 2px 6px rgba(10, 14, 19, 0.08);
+  --glow-pine:    0 0 0 1px rgba(var(--pine-rgb), 0.30),
+                  0 6px 20px -4px rgba(var(--pine-rgb), 0.35),
+                  0 2px 6px rgba(var(--pine-rgb), 0.10);
+
+  /* ---------- Body backdrop tint (portal) — brand-derived ---------- */
+  --body-tint-1: rgba(var(--brand-rgb), 0.06);   /* teal glow, top */
+  --body-tint-2: rgba(var(--orange-rgb), 0.04);  /* orange glow, bottom-right */
+
+  /* ---------- Motion ---------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    120ms;
+  --dur-base:    180ms;
+  --dur-slow:    280ms;
+
+  /* ---------- Type scale ---------- */
+  --fs-display: 72px;
+  --fs-h1:      56px;
+  --fs-h2:      40px;
+  --fs-h3:      28px;
+  --fs-h4:      22px;
+  --fs-h5:      18px;
+  --fs-body-lg: 18px;
+  --fs-body:    16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 13px;
+  --fs-micro:   12px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.4;
+  --lh-relaxed: 1.6;
+
+  --track-tight:  -0.03em;
+  --track-snug:   -0.015em;
+  --track-normal: 0;
+  --track-wide:   0.04em;
+}
+
+/* ============================================================
+   Base type styles — semantic (portal). Moved from portal-tokens.
+   ============================================================ */
+
+.t-display {
+  font-family: var(--font-mono);   /* Theta: headings in Roboto Mono */
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  color: var(--fg-1);
+}
+.t-h1 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  color: var(--fg-1);
+}
+.t-h2 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-snug);
+  color: var(--fg-1);
+}
+.t-h3 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-snug);
+  color: var(--fg-1);
+}
+.t-h4 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+.t-h5 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-h5);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+.t-body-lg { font-weight: 400; font-size: var(--fs-body-lg); line-height: var(--lh-relaxed); }
+.t-body    { font-weight: 400; font-size: var(--fs-body);    line-height: var(--lh-relaxed); }
+.t-body-sm { font-weight: 400; font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+.t-label   { font-weight: 500; font-size: var(--fs-body-sm); letter-spacing: var(--track-snug); }
+.t-caption { font-weight: 400; font-size: var(--fs-caption); color: var(--fg-3); line-height: var(--lh-normal); }
+.t-eyebrow {
+  font-weight: 600;
+  font-size: var(--fs-caption);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.t-mono { font-family: var(--font-mono); font-size: var(--fs-body-sm); }
+
+/* ============================================================
+   Signature: The Dot — colored dot after wordmarks
+   ============================================================ */
+
+.brand-dot {
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 999px;
+  background: var(--teal);
+  vertical-align: baseline;
+  margin-left: 0.08em;
+  transform: translateY(-0.04em);
+}
+.brand-dot--orange { background: var(--orange); }
+.brand-dot--pine   { background: var(--pine); }
